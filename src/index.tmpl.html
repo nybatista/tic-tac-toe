@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Spynejs - Hello World App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+
+<div class="game">
+    <div class="game-board">
+        <div class="status">status</div>
+        <div class="board-row">
+            <button class="square square-0" data-type="square" data-square-value=0></button>
+            <button class="square square-1" data-type="square" data-square-value=1></button>
+            <button class="square square-2" data-type="square" data-square-value=2></button>
+        </div>
+        <div class="board-row">
+            <button class="square square-3" data-type="square" data-square-value=3></button>
+            <button class="square square-4" data-type="square" data-square-value=4></button>
+            <button class="square square-5" data-type="square" data-square-value=5></button>
+        </div>
+        <div class="board-row">
+            <button class="square square-6" data-type="square" data-square-value=6></button>
+            <button class="square square-7" data-type="square" data-square-value=7></button>
+            <button class="square square-8" data-type="square" data-square-value=8></button>
+        </div>
+    </div>
+    <div class="game-info"><ol></ol></div>
+</div>
+</body>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: sans-serif;
+        margin: 20px;
+        padding: 0;
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 22px;
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 20px;
+    }
+
+    h3 {
+        margin-top: 0;
+        font-size: 18px;
+    }
+
+    h4 {
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    h5 {
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    h6 {
+        margin-top: 0;
+        font-size: 12px;
+    }
+
+    code {
+        font-size: 1.2em;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: sans-serif;
+        margin: 20px;
+        padding: 0;
+    }
+
+    .game-board.winner button.square{
+        pointer-events: none;
+    }
+
+    .square {
+        background: #fff;
+        border: 1px solid #999;
+        float: left;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 34px;
+        height: 34px;
+        margin-right: -1px;
+        margin-top: -1px;
+        padding: 0;
+        text-align: center;
+        width: 34px;
+        pointer-events: all;
+        visibility: visible;
+        user-select: none;
+    }
+
+
+
+    [data-active-square-numOld]{
+        pointer-events: none;
+    }
+    .square.hide[data-active-square-num] {
+        pointer-events: all;
+    }
+
+    .square.hide {
+        color:#fff;
+    }
+
+    .board-row:after {
+        clear: both;
+        content: '';
+        display: table;
+    }
+
+    .status {
+        margin-bottom: 10px;
+    }
+    .game {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .game-info {
+        margin-left: 20px;
+    }
+
+</style>
+</html>
