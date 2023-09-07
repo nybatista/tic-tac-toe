@@ -6,23 +6,24 @@ export class TicTacToeSquare extends ViewStream {
 
     constructor(props={}) {
         props.traits = [TicTacToeTraits];
+        props.squareNum = props.el.dataset.squareNum;
         super(props);
     }
 
     addActionListeners() {
-        // return nexted array(s)
-        return [];
+        return [
+            ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$UpdateSquare"]
+        ];
     }
 
     broadcastEvents() {
-        // return nexted array(s)
         return [
             ['button', 'click']
         ];
     }
 
     onRendered() {
-      this.getChannel("CHANNEL_TIC_TAC_TOE");
+      this.addChannel("CHANNEL_TIC_TAC_TOE");
 
     }
 

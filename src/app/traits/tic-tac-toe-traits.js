@@ -17,6 +17,13 @@ export class TicTacToeTraits extends SpyneTrait {
     return "Hello World";
   }
 
+  static ticTac$UpdateSquare(e, props=this.props){
+    const {state} = e.payload;
+    this.props.el.innerText =  state[this.props.squareNum] || '';
+
+
+  }
+
   static ticTac$InitBoard(props=this.props){
     new TicTacToeStatus({el:this.props.el$(".status").el});
     new TicTacToeMoveList({el:this.props.el$(".game-info").el});
@@ -52,16 +59,10 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       set currentSquareNum(num){
-        _currentSquareNum = num;
-       // console.log('moveNum before ',_moveNum);
+        _currentSquareNum = parseInt(num);
         _movesArr = slice(0, _moveNum, _movesArr);
-        //_moveNum = Math.min(_moveNum+1, _movesArr.length);
-
         this.updateState();
-
         _moveNum = _movesArr.length;
-        //console.log('moveNum after ',_moveNum);
-
       }
 
       get moveNum(){
@@ -128,21 +129,11 @@ export class TicTacToeTraits extends SpyneTrait {
 
           winnerMatchArr = compose(join(''),values, pickAll(arr))(currentState);
           _isWinner = testFoMatch(winnerMatchArr);
-          _winner = winnerMatchArr[0];
+          _winner = _isWinner === true ? winnerMatchArr[0] : undefined;
           iter++;
 
         }
 
-
-
-
-/*        for (let i = 0; i < lines.length; i++) {
-          const [a, b, c] = lines[i];
-          if (_movesArr[a] && _movesArr[a] === _movesArr[b] && _movesArr[a] === _movesArr[c]) {
-            return _movesArr[a];
-          }
-        }
-        return null;*/
 
         return _isWinner;
       }

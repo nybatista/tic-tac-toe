@@ -72,6 +72,8 @@ describe('should create tic tac toe state machine', ()=>{
     const stateMachineRowDiagO = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'O'}, {2: 'O'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{0:'X'}]);
     expect(stateMachineRowDiagO.winner).to.eq('O');
 
+    //const stateMachineRowDiagX = TicTacToeTraits.ticTac$CreateStateMachine([{0: 'X'}, {1: 'O'}, {4: 'X'}]);
+    //console.log('state machien winner ',stateMachineRowDiagX.winner)
 
   })
 
