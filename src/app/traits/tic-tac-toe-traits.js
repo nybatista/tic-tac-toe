@@ -2,7 +2,7 @@ import {SpyneTrait} from 'spyne';
 import {TicTacToeSquare} from 'components/tic-tac-toe-square';
 import {TicTacToeStatus} from 'components/tic-tac-toe-status';
 import {TicTacToeMoveList} from 'components/tic-tac-toe-move-list';
-import {compose, head, join, pickAll, last, values, mergeAll} from 'ramda';
+import {compose, head, join, pickAll, last, values, mergeAll, test, slice} from 'ramda';
 
 
 export class TicTacToeTraits extends SpyneTrait {
@@ -33,7 +33,7 @@ export class TicTacToeTraits extends SpyneTrait {
      let _movesArr = movesArr;
      let _moveNum;
      let _movesLen;
-     let _squareNum;
+     let _currentSquareNum;
      let _squareVal;
      let _isWinner;
      let _winner;
@@ -47,13 +47,21 @@ export class TicTacToeTraits extends SpyneTrait {
 
       }
 
-      get squareNum(){
-        return _squareNum;
+      get currentSquareNum(){
+        return _currentSquareNum;
       }
 
-      set squareNum(num){
-        _squareNum = num;
+      set currentSquareNum(num){
+        _currentSquareNum = num;
+       // console.log('moveNum before ',_moveNum);
+        _movesArr = slice(0, _moveNum, _movesArr);
+        //_moveNum = Math.min(_moveNum+1, _movesArr.length);
+
         this.updateState();
+
+        _moveNum = _movesArr.length;
+        //console.log('moveNum after ',_moveNum);
+
       }
 
       get moveNum(){
@@ -68,8 +76,10 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       updateState(){
-        _movesArr.push({[_squareNum]: this.updateSquareVal()});
+        _movesArr.push({[_currentSquareNum]: this.updateSquareVal()});
       }
+
+
 
       updateSquareVal(){
         const checkForX = val => ['O', undefined].includes(val) ? "X" : "O";
@@ -77,16 +87,23 @@ export class TicTacToeTraits extends SpyneTrait {
         return _squareVal;
       }
 
+      get movesArr(){
+        return _movesArr;
+      }
+
       get state(){
-        _state = mergeAll(_movesArr);
+        _state = compose(mergeAll, slice(0, _moveNum))(_movesArr);
         return _state;
       }
 
 
-
+      get winner(){
+        this.checkForWinner();
+        return _winner;
+      }
 
       get isWinner(){
-
+        return _isWinner;
       }
 
       checkForWinner(){
@@ -102,13 +119,15 @@ export class TicTacToeTraits extends SpyneTrait {
         ];
         const testFoMatch = test(/^(X{3}|O{3})$/);
 
-        let isWinner = false;
+        _isWinner = false;
         let iter = 0;
         let arr, winnerMatchArr;
-        while (isWinner!==true || iter<lines.length){
+        const currentState = this.state;
+        while (iter<lines.length && _isWinner === false){
           arr = lines[iter];
-          winnerMatchArr = compose(join(''),values, pickAll(arr))(_state)
-          isWinner = testFoMatch(winnerMatchArr);
+
+          winnerMatchArr = compose(join(''),values, pickAll(arr))(currentState);
+          _isWinner = testFoMatch(winnerMatchArr);
           _winner = winnerMatchArr[0];
           iter++;
 
@@ -124,6 +143,8 @@ export class TicTacToeTraits extends SpyneTrait {
           }
         }
         return null;*/
+
+        return _isWinner;
       }
 
 
