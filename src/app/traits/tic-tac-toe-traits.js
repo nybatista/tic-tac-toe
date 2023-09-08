@@ -105,7 +105,11 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       set moveNum(val){
+        console.log('old move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
         _moveNum = parseInt(val);
+        this.updateSquareVal(1);
+        console.log('new move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
+
       }
       get squareVal(){
         return _squareVal;
@@ -117,10 +121,10 @@ export class TicTacToeTraits extends SpyneTrait {
 
 
 
-      updateSquareVal(){
+      updateSquareVal(sliceAdj=0){
         const checkForX = val => ['O', undefined].includes(val) ? "X" : "O";
-        _squareVal = compose(checkForX, head, values, last)(_movesArr);
-        _nextSquareVal = checkForX(_squareVal);
+        _squareVal = compose(checkForX, head, values, last, slice(0,_moveNum-sliceAdj))(_movesArr);
+        _nextSquareVal = _moveNum === 0 ? "X" : checkForX(_squareVal);
         return _squareVal;
       }
 
@@ -129,15 +133,17 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       get state(){
-        return {
-          currentSquareNum: _currentSquareNum,
-          currentSquareVal:        _squareVal,
-          nextSquareVal:    _nextSquareVal,
-          moveNum:          _moveNum,
+        const obj = {
           squares:          this.squares,
           winner:           this.winner,
-          isWinner:        this.winner !== undefined
+          isWinner:        this.winner !== undefined,
+          currentSquareNum:  _currentSquareNum,
+          currentSquareVal:        _squareVal,
+          nextSquareVal:    _nextSquareVal,
+          moveNum:          _moveNum
         };
+        console.log("STATE: ",obj, JSON.stringify(_movesArr))
+        return obj;
       }
 
        get squares(){
