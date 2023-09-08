@@ -12,7 +12,8 @@ export class TicTacToeSquare extends ViewStream {
 
     addActionListeners() {
         return [
-            ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$UpdateSquare"]
+          ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$UpdateSquare"],
+          ["CHANNEL_TIC_TAC_TOE_MOVE_CLICK_EVENT", "ticTac$UpdateSquare"]
         ];
     }
 

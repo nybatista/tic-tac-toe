@@ -12,7 +12,7 @@ export class TicTacToeStatus extends ViewStream {
     addActionListeners() {
         // return nexted array(s)
         return [
-          ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$UpdateStatusText"]
+          ["CHANNEL_TIC_TAC_TOE_.*_CLICK_EVENT", "ticTac$UpdateStatusText"]
 
         ];
     }

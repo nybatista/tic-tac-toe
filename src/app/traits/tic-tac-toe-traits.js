@@ -1,4 +1,4 @@
-import {SpyneTrait} from 'spyne';
+import {SpyneTrait, ChannelPayloadFilter} from 'spyne';
 import {TicTacToeSquare} from 'components/tic-tac-toe-square';
 import {TicTacToeStatus} from 'components/tic-tac-toe-status';
 import {TicTacToeMoveList} from 'components/tic-tac-toe-move-list';
@@ -23,6 +23,20 @@ export class TicTacToeTraits extends SpyneTrait {
     this.props.el.innerText =  squares[this.props.squareNum] || '';
 
 
+  }
+
+  static ticTac$GetPayloadFilter(type='move', props=this.props){
+
+    const payloadFiltersHash = {
+
+      move: ()=>new ChannelPayloadFilter({
+        payload: v => v.moveNum<=this.props.moveNum
+      })
+
+    }
+
+    const fn = payloadFiltersHash[type];
+    return fn();
   }
 
   static ticTac$GetMoveBtnText(num=0){
