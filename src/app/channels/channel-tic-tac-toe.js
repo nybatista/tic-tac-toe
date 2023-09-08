@@ -18,11 +18,12 @@ export class ChannelTicTacToe extends Channel{
     const {target} = e.event;
     const isEmptySquare = type==='square' && target.innerText==='';
 
-    if (isEmptySquare === true){
+    if (isEmptySquare === true && this.props.stateMachine.state.isWinner !== true){
       this.props.stateMachine.currentSquareNum = squareNum;
-      const {state, winner} = this.props.stateMachine;
+      const {state} = this.props.stateMachine;
+        this.sendChannelPayload("CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", state);
 
-      this.sendChannelPayload("CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", {state, winner})
+
     }
 
     //console.log("btn clicked ",{type,e,isEmptySquare,squareNum},  this.props.stateMachine.state,  this.props.stateMachine.winner);

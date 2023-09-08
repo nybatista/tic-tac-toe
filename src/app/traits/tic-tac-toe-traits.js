@@ -18,10 +18,18 @@ export class TicTacToeTraits extends SpyneTrait {
   }
 
   static ticTac$UpdateSquare(e, props=this.props){
-    const {state} = e.payload;
-    this.props.el.innerText =  state[this.props.squareNum] || '';
+    const {squares} = e.payload;
+    this.props.el.innerText =  squares[this.props.squareNum] || '';
 
 
+  }
+
+  static ticTac$GetStatusText(state={isWinner:false, nextSquareVal:"X"}){
+    return state.isWinner ? `Winner: ${state.currentSquareVal}` : `Next player: ${state.nextSquareVal}`;
+  }
+
+  static ticTac$UpdateStatusText(e={payload:{isWinner:false, nextSquareVal:"X"}}, props=this.props){
+    this.props.el.innerText = this.ticTac$GetStatusText(e.payload);
   }
 
   static ticTac$InitBoard(props=this.props){
@@ -42,9 +50,10 @@ export class TicTacToeTraits extends SpyneTrait {
      let _movesLen;
      let _currentSquareNum;
      let _squareVal;
+     let _nextSquareVal;
      let _isWinner;
      let _winner;
-     let _state = {};
+     let _squares = {};
 
      class TicTacToeStateMachine{
 
@@ -85,6 +94,7 @@ export class TicTacToeTraits extends SpyneTrait {
       updateSquareVal(){
         const checkForX = val => ['O', undefined].includes(val) ? "X" : "O";
         _squareVal = compose(checkForX, head, values, last)(_movesArr);
+        _nextSquareVal = checkForX(_squareVal);
         return _squareVal;
       }
 
@@ -93,9 +103,21 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       get state(){
-        _state = compose(mergeAll, slice(0, _moveNum))(_movesArr);
-        return _state;
+        return {
+          currentSquareNum: _currentSquareNum,
+          currentSquareVal:        _squareVal,
+          nextSquareVal:    _nextSquareVal,
+          moveNum:          _moveNum,
+          squares:          this.squares,
+          winner:           this.winner,
+          isWinner:        this.winner !== undefined
+        };
       }
+
+       get squares(){
+         _squares = compose(mergeAll, slice(0, _moveNum))(_movesArr);
+         return _squares;
+       }
 
 
       get winner(){
@@ -123,7 +145,7 @@ export class TicTacToeTraits extends SpyneTrait {
         _isWinner = false;
         let iter = 0;
         let arr, winnerMatchArr;
-        const currentState = this.state;
+        const currentState = this.squares;
         while (iter<lines.length && _isWinner === false){
           arr = lines[iter];
 

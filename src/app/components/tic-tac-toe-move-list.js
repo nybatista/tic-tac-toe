@@ -20,7 +20,7 @@ export class TicTacToeMoveList extends ViewStream {
     }
 
     onRendered() {
-      this.getChannel("CHANNEL_TIC_TAC_TOE");
+      this.addChannel("CHANNEL_TIC_TAC_TOE");
 
     }
 

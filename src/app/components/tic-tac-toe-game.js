@@ -23,7 +23,7 @@ export class TicTacToeGame extends ViewStream {
     onRendered() {
       console.log("tic tac toe board rendered");
       this.ticTac$InitBoard();
-      this.getChannel("CHANNEL_TIC_TAC_TOE");
+      this.addChannel("CHANNEL_TIC_TAC_TOE");
     }
 
 }

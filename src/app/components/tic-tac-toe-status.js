@@ -11,7 +11,10 @@ export class TicTacToeStatus extends ViewStream {
 
     addActionListeners() {
         // return nexted array(s)
-        return [];
+        return [
+          ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$UpdateStatusText"]
+
+        ];
     }
 
     broadcastEvents() {
@@ -20,7 +23,9 @@ export class TicTacToeStatus extends ViewStream {
     }
 
     onRendered() {
-      this.getChannel("CHANNEL_TIC_TAC_TOE");
+      this.addChannel("CHANNEL_TIC_TAC_TOE");
+      this.ticTac$UpdateStatusText();
+      //this.props.el.innerText = this.ticTac$GetStatusText();
     }
 
 }

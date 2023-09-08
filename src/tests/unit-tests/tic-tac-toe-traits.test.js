@@ -34,7 +34,7 @@ describe('should create tic tac toe state machine', ()=>{
     stateMachine.currentSquareNum = 6;
     stateMachine.currentSquareNum = 5;
     stateMachine.currentSquareNum = 4;
-    //console.log('state machine ', stateMachine.state, ' -- ',stateMachine.movesArr);
+    //console.log('state machine ', stateMachine.squares, ' -- ',stateMachine.movesArr);
 
     return true;
 
@@ -46,17 +46,17 @@ describe('should create tic tac toe state machine', ()=>{
 
 
     stateMachine.moveNum = 2;
-    expect(stateMachine.state).to.deep.eq({2: 'O', 3: 'X'});
-    //console.log('state machine before num', stateMachine.state, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
+    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X'});
+    //console.log('state machine before num', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
 
     stateMachine.moveNum = 4;
-    expect(stateMachine.state).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O'});
-    //console.log('state machine after num1', stateMachine.state, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
+    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O'});
+    //console.log('state machine after num1', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
     stateMachine.currentSquareNum = 7;
-    expect(stateMachine.state).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O', 7: 'O'});
-    //console.log('state machine after num ', stateMachine.state, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
+    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O', 7: 'O'});
+    //console.log('state machine after num ', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
 
 
@@ -67,6 +67,9 @@ describe('should create tic tac toe state machine', ()=>{
   it('should check for winner',()=>{
 
     const stateMachineRow1X = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'O'}, {2: 'X'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{0:'X'}]);
+    stateMachineRow1X.currentSquareNum = 8;
+
+    //console.log("state machien state ",stateMachineRow1X.state);
     expect(stateMachineRow1X.winner).to.eq('X');
 
     const stateMachineRowDiagO = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'O'}, {2: 'O'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{0:'X'}]);
@@ -120,11 +123,23 @@ describe('should test tic tac toe move traits', ()=>{
 
 describe('should test tic tac toe status traits', ()=>{
 
-  it('should test methods for status', ()=>{
-    //console.log('status tests ');
-
-    return true;
+  it('should create default init text', ()=>{
+    const defaultStatusTxt = TicTacToeTraits.ticTac$GetStatusText();
+    expect(defaultStatusTxt).to.eq("Next player: X");
   });
+
+  it('should create correct next players ',()=>{
+    const nextPlayerO = TicTacToeTraits.ticTac$GetStatusText({isWinner:false, nextSquareVal:"O"});
+    expect(nextPlayerO).to.eq("Next player: O");
+
+  })
+  it('should create correct winnners ',()=>{
+    const winnerO = TicTacToeTraits.ticTac$GetStatusText({isWinner:true, currentSquareVal:"O"});
+    const winnerX = TicTacToeTraits.ticTac$GetStatusText({isWinner:true, currentSquareVal:"X"});
+
+    expect(winnerO).to.eq("Winner: O");
+    expect(winnerX).to.eq("Winner: X");
+  })
 
 
 });
