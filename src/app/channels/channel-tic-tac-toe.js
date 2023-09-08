@@ -14,15 +14,20 @@ export class ChannelTicTacToe extends Channel{
   }
 
   onBtnClicked(e){
-    const {type, squareNum} = e.payload;
+    const {type, squareNum, moveNum} = e.payload;
     const {target} = e.event;
     const isEmptySquare = type==='square' && target.innerText==='';
-
+    console.log("TYPE IS ", {type,moveNum});
     if (isEmptySquare === true && this.props.stateMachine.state.isWinner !== true){
       this.props.stateMachine.currentSquareNum = squareNum;
       const {state} = this.props.stateMachine;
         this.sendChannelPayload("CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", state);
 
+
+    } else if (type === 'move'){
+        this.props.stateMachine.moveNum = moveNum;
+        const {state} = this.props.stateMachine;
+        this.sendChannelPayload("CHANNEL_TIC_TAC_TOE_MOVE_CLICK_EVENT", state);
 
     }
 
@@ -39,7 +44,9 @@ export class ChannelTicTacToe extends Channel{
   addRegisteredActions() {
 
     return [
-        "CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT"
+      "CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT",
+      "CHANNEL_TIC_TAC_TOE_MOVE_CLICK_EVENT"
+
     ];
   }
 

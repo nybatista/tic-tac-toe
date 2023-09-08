@@ -3,6 +3,7 @@ import {TicTacToeSquare} from 'components/tic-tac-toe-square';
 import {TicTacToeStatus} from 'components/tic-tac-toe-status';
 import {TicTacToeMoveList} from 'components/tic-tac-toe-move-list';
 import {compose, head, join, pickAll, last, values, mergeAll, test, slice} from 'ramda';
+import {TicTacToeMoveBtn} from 'components/tic-tac-toe-move-btn';
 
 
 export class TicTacToeTraits extends SpyneTrait {
@@ -21,6 +22,17 @@ export class TicTacToeTraits extends SpyneTrait {
     const {squares} = e.payload;
     this.props.el.innerText =  squares[this.props.squareNum] || '';
 
+
+  }
+
+  static ticTac$GetMoveBtnText(num=0){
+    return num === 0 ? "Go to game start" : `Go to move #${num}`;
+  }
+
+  static ticTac$CreateMoveItem(e={payload:{moveNum: 0}}){
+    const {moveNum} = e.payload;
+    const text = this.ticTac$GetMoveBtnText(moveNum);
+    this.appendView(new TicTacToeMoveBtn( {text, moveNum}), "ol");
 
   }
 
@@ -79,7 +91,7 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       set moveNum(val){
-        _moveNum = val;
+        _moveNum = parseInt(val);
       }
       get squareVal(){
         return _squareVal;

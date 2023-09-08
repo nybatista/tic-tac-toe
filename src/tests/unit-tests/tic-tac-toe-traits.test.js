@@ -109,8 +109,10 @@ describe('should test tic tac toe square traits', ()=>{
 
 describe('should test tic tac toe move traits', ()=>{
 
-  it('should test methods for move', ()=>{
-    //console.log('move tests ');
+  it('should create default text for move button', ()=>{
+    const defaultBtnTxt = TicTacToeTraits.ticTac$GetMoveBtnText();
+
+    console.log("dfaeult btn txt ",defaultBtnTxt);
 
     return true;
   });

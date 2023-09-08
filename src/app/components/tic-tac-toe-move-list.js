@@ -11,7 +11,10 @@ export class TicTacToeMoveList extends ViewStream {
 
     addActionListeners() {
         // return nexted array(s)
-        return [];
+        return [
+          ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "ticTac$CreateMoveItem"]
+
+        ];
     }
 
     broadcastEvents() {
@@ -21,6 +24,7 @@ export class TicTacToeMoveList extends ViewStream {
 
     onRendered() {
       this.addChannel("CHANNEL_TIC_TAC_TOE");
+      this.ticTac$CreateMoveItem();
 
     }
 

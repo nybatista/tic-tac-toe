@@ -6,6 +6,8 @@ export class TicTacToeMoveBtn extends ViewStream {
 
     constructor(props={}) {
       props.traits = [TicTacToeTraits];
+      props.tagName = 'li';
+      props.template = `<button data-type='move' data-move-num=${props.moveNum}>${props.text}</button>`
       super(props);
     }
 
@@ -16,12 +18,13 @@ export class TicTacToeMoveBtn extends ViewStream {
 
     broadcastEvents() {
         // return nexted array(s)
-        return [];
+        return [
+            ['button' , 'click']
+           ];
     }
 
     onRendered() {
       this.addChannel("CHANNEL_TIC_TAC_TOE");
-
     }
 
 }
