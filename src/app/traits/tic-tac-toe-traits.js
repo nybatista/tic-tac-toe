@@ -97,6 +97,8 @@ export class TicTacToeTraits extends SpyneTrait {
         _currentSquareNum = parseInt(num);
         _movesArr = slice(0, _moveNum, _movesArr);
         this.updateState();
+        this.updateNextSquareVal(_squareVal);
+
         _moveNum = _movesArr.length;
       }
 
@@ -108,6 +110,7 @@ export class TicTacToeTraits extends SpyneTrait {
         console.log('old move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
         _moveNum = parseInt(val);
         this.updateSquareVal(1);
+        this.updateNextSquareVal(_nextSquareVal);
         console.log('new move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
 
       }
@@ -121,11 +124,17 @@ export class TicTacToeTraits extends SpyneTrait {
 
 
 
-      updateSquareVal(sliceAdj=0){
+      updateSquareVal(adjNum=0){
         const checkForX = val => ['O', undefined].includes(val) ? "X" : "O";
-        _squareVal = compose(checkForX, head, values, last, slice(0,_moveNum-sliceAdj))(_movesArr);
-        _nextSquareVal = _moveNum === 0 ? "X" : checkForX(_squareVal);
+        _squareVal = compose(checkForX, head, values, last, slice(0,_moveNum-adjNum))(_movesArr);
+        //_nextSquareVal = _moveNum === 0 ? "X" : checkForX(_squareVal);
+        //_nextSquareVal = checkForX(_squareVal);
         return _squareVal;
+      }
+
+      updateNextSquareVal(str){
+        _nextSquareVal = str === "X" ? "O" : "X";
+        return _nextSquareVal;
       }
 
       get movesArr(){
