@@ -89,6 +89,13 @@ export class TicTacToeTraits extends SpyneTrait {
         this.updateState();
         _moveNum = _movesArr.length;
       }
+       set squareNum(num){
+         _currentSquareNum = parseInt(num);
+         _movesArr = slice(0, _moveNum, _movesArr);
+         this.updateSquareVals();
+         this.updateState();
+         _moveNum = _movesArr.length;
+       }
 
 
       get moveNum(){
