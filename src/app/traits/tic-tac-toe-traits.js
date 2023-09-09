@@ -14,10 +14,6 @@ export class TicTacToeTraits extends SpyneTrait {
     super(context, traitPrefix);
   }
 
-  static ticTac$HelloWorld(){
-    return "Hello World";
-  }
-
   static ticTac$UpdateSquare(e, props=this.props){
     const {squares} = e.payload;
     this.props.el.innerText =  squares[this.props.squareNum] || '';
@@ -118,10 +114,8 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
 
-
-
       get state(){
-        const obj = {
+        return {
           squares:          this.squares,
           winner:           this.winner,
           isWinner:        this.winner !== undefined,
@@ -130,7 +124,6 @@ export class TicTacToeTraits extends SpyneTrait {
           currentSquareVal:        _squareVal,
           moveNum:          _moveNum
         };
-        return obj;
       }
 
        get squares(){
@@ -167,28 +160,18 @@ export class TicTacToeTraits extends SpyneTrait {
         const currentState = this.squares;
         while (iter<lines.length && _isWinner === false){
           arr = lines[iter];
-
           winnerMatchArr = compose(join(''),values, pickAll(arr))(currentState);
           _isWinner = testFoMatch(winnerMatchArr);
           _winner = _isWinner === true ? winnerMatchArr[0] : undefined;
           iter++;
-
         }
-
 
         return _isWinner;
       }
 
-
-
-
-
-
     }
 
     return new TicTacToeStateMachine();
-
-
 
   }
 

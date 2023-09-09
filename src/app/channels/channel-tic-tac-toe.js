@@ -17,7 +17,7 @@ export class ChannelTicTacToe extends Channel{
     const {type, squareNum, moveNum} = e.payload;
     const {target} = e.event;
     const isEmptySquare = type==='square' && target.innerText==='';
-    console.log("TYPE IS ", {type,moveNum});
+    //console.log("TYPE IS ", {type,moveNum});
     if (isEmptySquare === true && this.props.stateMachine.state.isWinner !== true){
       this.props.stateMachine.currentSquareNum = squareNum;
       const {state} = this.props.stateMachine;
