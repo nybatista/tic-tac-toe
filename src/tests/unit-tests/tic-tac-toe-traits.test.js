@@ -19,10 +19,10 @@ describe('should create tic tac toe state machine', ()=>{
 
   it('should return first X val',()=>{
     stateMachine.updateSquareVals(0);
-    const {squareVal} = stateMachine;
+    const {currentSquareVal} = stateMachine.state;
 
 
-    expect(squareVal).to.eq('X');
+    expect(currentSquareVal).to.eq('X');
   })
 
   it('should update state when adding a square number', ()=>{
@@ -42,7 +42,7 @@ describe('should create tic tac toe state machine', ()=>{
   })
 
   it('should update state when updating the move number', ()=>{
-    const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'X'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{8:'X'},{0:'O'},{2: 'O'}]);
+    const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'X'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{8:'X'},{0:'O'},{2: 'X'}]);
 
 
     stateMachine.moveNum = 2;
@@ -55,7 +55,7 @@ describe('should create tic tac toe state machine', ()=>{
 
     expect(stateMachine.squares).to.deep.eq({3: 'X', 4: 'O', 5: 'X', 6: 'O'});
 
-    stateMachine.currentSquareNum = 7;
+    stateMachine.squareNum = 7;
     expect(stateMachine.squares).to.deep.eq({3: 'X', 4: 'O', 5: 'X', 6: 'O', 7: 'X'});
     //console.log('state machine after num ', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
