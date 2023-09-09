@@ -167,7 +167,7 @@ export class TicTacToeTraits extends SpyneTrait {
           currentSquareVal:        _squareVal,
           moveNum:          _moveNum
         };
-        console.log("STATE: ",obj, JSON.stringify(_movesArr))
+        //console.log("STATE: ",obj, JSON.stringify(_movesArr))
         return obj;
       }
 

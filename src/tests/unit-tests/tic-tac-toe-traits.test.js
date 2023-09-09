@@ -42,20 +42,21 @@ describe('should create tic tac toe state machine', ()=>{
   })
 
   it('should update state when updating the move number', ()=>{
-    const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{2: 'O'}, {3: 'X'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{8:'X'},{0:'O'}]);
+    const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{3: 'X'}, {6: 'O'}, {5: 'X'}, {4: 'O'}, {1:'X'}, {7:'O'},{8:'X'},{0:'O'},{2: 'O'}]);
 
 
     stateMachine.moveNum = 2;
-    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X'});
+    expect(stateMachine.squares).to.deep.eq({3: 'X', 6: 'O'});
     //console.log('state machine before num', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
 
     stateMachine.moveNum = 4;
-    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O'});
     //console.log('state machine after num1', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
+    expect(stateMachine.squares).to.deep.eq({3: 'X', 4: 'O', 5: 'X', 6: 'O'});
+
     stateMachine.currentSquareNum = 7;
-    expect(stateMachine.squares).to.deep.eq({2: 'O', 3: 'X', 5: 'X', 6: 'O', 7: 'O'});
+    expect(stateMachine.squares).to.deep.eq({3: 'X', 4: 'O', 5: 'X', 6: 'O', 7: 'X'});
     //console.log('state machine after num ', stateMachine.squares, ' -- ',stateMachine.movesArr,' -- ',stateMachine.moveNum);
 
 
@@ -101,11 +102,11 @@ describe('should test tic tac toe square traits', ()=>{
   it('should get square number by move number', ()=>{
     const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{"0":"X"},{"4":"O"},{"1":"X"},{"2":"O"},{"5":"X"},{"3":"O"},{"6":"X"},{"8":"O"}]);
     const state1 = stateMachine.state;
-    console.log('state1 ',stateMachine.getCurrentSquareNumByMoveNum());
+    //console.log('state1 ',stateMachine.getCurrentSquareNumByMoveNum());
     stateMachine.moveNum = 2;
-    console.log('state2 ',stateMachine.getCurrentSquareNumByMoveNum());
+    //console.log('state2 ',stateMachine.getCurrentSquareNumByMoveNum());
     stateMachine.currentSquareNum = 6;
-    console.log('state3 ',stateMachine.getCurrentSquareNumByMoveNum(),stateMachine.state);
+    //console.log('state3 ',stateMachine.getCurrentSquareNumByMoveNum(),stateMachine.state);
 
     return true;
   });
