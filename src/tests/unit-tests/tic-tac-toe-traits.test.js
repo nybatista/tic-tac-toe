@@ -18,7 +18,7 @@ describe('should create tic tac toe state machine', ()=>{
   });
 
   it('should return first X val',()=>{
-    stateMachine.updateSquareVal();
+    stateMachine.updateSquareVals(0);
     const {squareVal} = stateMachine;
 
 
@@ -98,8 +98,14 @@ describe('should test tic tac toe channel traits', ()=>{
 
 describe('should test tic tac toe square traits', ()=>{
 
-  it('should test methods for square', ()=>{
-    //console.log('square tests ');
+  it('should get square number by move number', ()=>{
+    const stateMachine = TicTacToeTraits.ticTac$CreateStateMachine([{"0":"X"},{"4":"O"},{"1":"X"},{"2":"O"},{"5":"X"},{"3":"O"},{"6":"X"},{"8":"O"}]);
+    const state1 = stateMachine.state;
+    console.log('state1 ',stateMachine.getCurrentSquareNumByMoveNum());
+    stateMachine.moveNum = 2;
+    console.log('state2 ',stateMachine.getCurrentSquareNumByMoveNum());
+    stateMachine.currentSquareNum = 6;
+    console.log('state3 ',stateMachine.getCurrentSquareNumByMoveNum(),stateMachine.state);
 
     return true;
   });
@@ -112,7 +118,7 @@ describe('should test tic tac toe move traits', ()=>{
   it('should create default text for move button', ()=>{
     const defaultBtnTxt = TicTacToeTraits.ticTac$GetMoveBtnText();
 
-    console.log("dfaeult btn txt ",defaultBtnTxt);
+    //console.log("dfaeult btn txt ",defaultBtnTxt);
 
     return true;
   });

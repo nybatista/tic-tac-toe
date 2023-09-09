@@ -2,7 +2,7 @@ import {SpyneTrait, ChannelPayloadFilter} from 'spyne';
 import {TicTacToeSquare} from 'components/tic-tac-toe-square';
 import {TicTacToeStatus} from 'components/tic-tac-toe-status';
 import {TicTacToeMoveList} from 'components/tic-tac-toe-move-list';
-import {compose, head, join, pickAll, last, values, mergeAll, test, slice} from 'ramda';
+import {compose, defaultTo, head, join, keys, pickAll, last, values, mergeAll, test, slice} from 'ramda';
 import {TicTacToeMoveBtn} from 'components/tic-tac-toe-move-btn';
 
 
@@ -71,6 +71,7 @@ export class TicTacToeTraits extends SpyneTrait {
   static ticTac$CreateStateMachine(movesArr=[]){
 
      const _moveLimit = 9;
+     const getSquareVal = n => ["X","O"][n%2];
      let _movesArr = movesArr;
      let _moveNum;
      let _movesLen;
@@ -96,10 +97,16 @@ export class TicTacToeTraits extends SpyneTrait {
       set currentSquareNum(num){
         _currentSquareNum = parseInt(num);
         _movesArr = slice(0, _moveNum, _movesArr);
+        this.updateSquareVals();
         this.updateState();
-        this.updateNextSquareVal(_squareVal);
+        //this.updateNextSquareVal(_squareVal);
 
         _moveNum = _movesArr.length;
+      }
+
+      getCurrentSquareNumByMoveNum(){
+        _currentSquareNum =  compose(defaultTo('a'),head,keys,last,slice(0,_moveNum))(_movesArr);
+        return _currentSquareNum
       }
 
       get moveNum(){
@@ -107,24 +114,33 @@ export class TicTacToeTraits extends SpyneTrait {
       }
 
       set moveNum(val){
-        console.log('old move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
+        //console.log('old move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
         _moveNum = parseInt(val);
-        this.updateSquareVal(1);
-        this.updateNextSquareVal(_nextSquareVal);
-        console.log('new move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
+        //this.getCurrentSquareNumByMoveNum();
+        _nextSquareVal = getSquareVal(_moveNum);
+      //  this.updateSquareVals()
+      // this.updateSquareVal(1);
+       // this.updateNextSquareVal(_nextSquareVal);
+        //console.log('new move num ',{_moveNum, _currentSquareNum, _squareVal, _nextSquareVal})
 
       }
       get squareVal(){
         return _squareVal;
       }
 
+      updateSquareVals(num=_moveNum){
+        const n = _moveNum || 0;
+        _squareVal = getSquareVal(n);
+        _nextSquareVal = getSquareVal(n+1);
+      }
+
       updateState(){
-        _movesArr.push({[_currentSquareNum]: this.updateSquareVal()});
+        _movesArr.push({[_currentSquareNum]: _squareVal});
       }
 
 
 
-      updateSquareVal(adjNum=0){
+      updateSquareVal3(adjNum=0){
         const checkForX = val => ['O', undefined].includes(val) ? "X" : "O";
         _squareVal = compose(checkForX, head, values, last, slice(0,_moveNum-adjNum))(_movesArr);
         //_nextSquareVal = _moveNum === 0 ? "X" : checkForX(_squareVal);
@@ -146,9 +162,9 @@ export class TicTacToeTraits extends SpyneTrait {
           squares:          this.squares,
           winner:           this.winner,
           isWinner:        this.winner !== undefined,
+          nextSquareVal:    _nextSquareVal,
           currentSquareNum:  _currentSquareNum,
           currentSquareVal:        _squareVal,
-          nextSquareVal:    _nextSquareVal,
           moveNum:          _moveNum
         };
         console.log("STATE: ",obj, JSON.stringify(_movesArr))
