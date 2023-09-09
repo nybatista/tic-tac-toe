@@ -1,6 +1,5 @@
 import {ViewStream} from 'spyne';
 import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
-import {ChannelTicTacToe} from 'channels/channel-tic-tac-toe';
 
 export class TicTacToeStatus extends ViewStream {
 
@@ -10,22 +9,12 @@ export class TicTacToeStatus extends ViewStream {
     }
 
     addActionListeners() {
-        // return nexted array(s)
-        return [
-          ["CHANNEL_TIC_TAC_TOE_.*_CLICK_EVENT", "ticTac$UpdateStatusText"]
-
-        ];
-    }
-
-    broadcastEvents() {
-        // return nexted array(s)
-        return [];
+        return [["CHANNEL_TIC_TAC_TOE_.*_CLICK_EVENT", "ticTac$UpdateStatusText"]];
     }
 
     onRendered() {
       this.addChannel("CHANNEL_TIC_TAC_TOE");
       this.ticTac$UpdateStatusText();
-      //this.props.el.innerText = this.ticTac$GetStatusText();
     }
 
 }

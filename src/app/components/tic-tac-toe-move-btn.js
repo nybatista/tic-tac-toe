@@ -1,6 +1,5 @@
 import {ViewStream, channelPayloadFilter, ChannelPayloadFilter} from 'spyne';
 import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
-import {ChannelTicTacToe} from 'channels/channel-tic-tac-toe';
 
 export class TicTacToeMoveBtn extends ViewStream {
 
@@ -12,17 +11,12 @@ export class TicTacToeMoveBtn extends ViewStream {
     }
 
     addActionListeners() {
-      return [
-          ["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "disposeViewStream", this.ticTac$GetPayloadFilter('move')]
-        ];
+      return [["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "disposeViewStream", this.ticTac$GetPayloadFilter('move')]];
     }
 
 
     broadcastEvents() {
-        // return nexted array(s)
-        return [
-            ['button' , 'click']
-           ];
+        return [['button' , 'click']];
     }
 
     onRendered() {

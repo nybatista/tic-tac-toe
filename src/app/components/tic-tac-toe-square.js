@@ -1,6 +1,5 @@
 import {ViewStream} from 'spyne';
 import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
-import {ChannelTicTacToe} from 'channels/channel-tic-tac-toe';
 
 export class TicTacToeSquare extends ViewStream {
 
@@ -18,9 +17,7 @@ export class TicTacToeSquare extends ViewStream {
     }
 
     broadcastEvents() {
-        return [
-            ['button', 'click']
-        ];
+        return [['button', 'click']];
     }
 
     onRendered() {

@@ -99,9 +99,6 @@ export class TicTacToeTraits extends SpyneTrait {
         _moveNum = parseInt(val);
         _nextSquareVal = getSquareVal(_moveNum);
       }
-      get squareVal(){
-        return _squareVal;
-      }
 
       updateSquareVals(num=_moveNum){
         const n = _moveNum || 0;
