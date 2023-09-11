@@ -24,8 +24,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 //new AppView().prependToDom(document.body);
-//new TicTacToeGame();
+new TicTacToeGame();
 
+/*
 const ticTacToeGame = new ViewStream({
   el:  document.querySelector('.game'),
   traits: [TicTacToeTraits]
@@ -33,3 +34,4 @@ const ticTacToeGame = new ViewStream({
 })
 ticTacToeGame.ticTac$InitBoard()
 
+*/

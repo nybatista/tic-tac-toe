@@ -107,6 +107,22 @@ export class TicTacToeTraits extends SpyneTrait {
     this.props.el.innerText =  squares[this.props.squareNum] || '';
   }
 
+  static ticTac$UpdateAllSquares(e, props=this.props){
+    const {squares} = e.payload;
+
+    const updateSquare = (el)=>{
+      const {squareNum} = el.dataset;
+      el.innerText = squares[squareNum] || '';
+      console.log('squares ',{squares, squareNum}, squares[squareNum])
+
+    }
+    this.props.el$('.square').arr.forEach(updateSquare);
+
+    this.ticTac$CreateMoveItem(e);
+    //this.props.el.innerText =  squares[this.props.squareNum] || '';
+  }
+
+
   static ticTac$GetMoveBtnText(num=0){
     return num === 0 ? "Go to game start" : `Go to move #${num}`;
   }
@@ -123,7 +139,7 @@ export class TicTacToeTraits extends SpyneTrait {
   }
 
   static ticTac$UpdateStatusText(e={payload:{isWinner:false, nextSquareVal:"X"}}, props=this.props){
-    this.props.el.innerText = this.ticTac$GetStatusText(e.payload);
+    this.props.el$('.status').el.innerText = this.ticTac$GetStatusText(e.payload);
   }
 
   static ticTac$InitBoard(props=this.props){
