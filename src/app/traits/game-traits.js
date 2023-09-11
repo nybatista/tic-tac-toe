@@ -42,10 +42,12 @@ export class GameTraits extends SpyneTrait {
           acc[val] = xoFn(i); return acc
         };
 
-        const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length);
+        //const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length);
+        const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
 
         console.log('squares arr is ',{_lastMove, squaresArr, _movesArr})
-        return squaresArr.reduce(reduceToXO, []);
+        return squaresArr;
+        //return squaresArr.reduce(reduceToXO, []);
       }
 
 
