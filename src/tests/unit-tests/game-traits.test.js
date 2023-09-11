@@ -22,7 +22,11 @@ describe('should test game traits', () => {
       gameState.square = 4;
      // expect(gameState.squares).to.deep.eq(['X', 'X', undefined, 'O', 'O', 'O', undefined, 'X']);
 
-      gameState.move = 2;
+     /* gameState.move = 2;
+
+      gameState.square = 1;
+      gameState.square = 7;
+      gameState.square = 2;*/
 
       console.log("game state is ",gameState.squares);
 

@@ -26,7 +26,7 @@ export class GameTraits extends SpyneTrait {
       }
 
       set square(n=0){
-          _movesArr.splice(_lastMove+1, _movesArr.length, n);
+          _movesArr.splice(_lastMove, _movesArr.length, n);
           _lastMove = _movesArr.length;
         console.log("moves arr ",{_movesArr,n});
 
