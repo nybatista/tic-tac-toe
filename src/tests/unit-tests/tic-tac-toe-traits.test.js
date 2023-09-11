@@ -11,6 +11,30 @@ describe('should init tic-tac-toe traits tests', () => {
 
 
 
+describe('should create game state class and methods',()=>{
+
+
+    it('should initialize the game state machine',()=>{
+
+        const gameState =  TicTacToeTraits.ticTac$CreateGameState()
+
+      expect(gameState).to.be.a('object')
+    })
+
+    it('should return game state',()=>{
+      const gameState =  TicTacToeTraits.ticTac$CreateGameState([0,2,3,4])
+
+
+      console.log('state is ',gameState.state);
+    })
+
+
+
+
+})
+
+
+
 describe('should create tic tac toe state machine', ()=>{
   const stateMachine =  TicTacToeTraits.ticTac$CreateStateMachine();
   it('should return state machine object', ()=>{

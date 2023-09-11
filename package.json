@@ -11,6 +11,7 @@
     "test": "karma start"
   },
   "dependencies": {
+    "ramda": "^0.29.0",
     "spyne": "^0.18.3",
     "spyne-plugin-console": "^0.3.3"
   },

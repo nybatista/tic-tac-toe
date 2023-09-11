@@ -136,6 +136,41 @@ export class TicTacToeTraits extends SpyneTrait {
     this.props.el$('.square').arr.forEach(el=>new TicTacToeSquare({el}))
   }
 
+  static ticTac$CreateGameState(gameArr=[]){
+    let _gameArr = gameArr;
+    let _gameLen = 0;
+
+    const xoFn = n => ["X","O"][n%2];
+
+    class GameState {
+
+      constructor() {
+
+      }
+
+      set move(n){
+        _gameLen = parseInt(n);
+      }
+
+      set square(n){
+        _gameArr = slice(0, _gameLen, _gameArr);
+        _gameArr.push(parseInt(n));
+        _gameLen = _gameArr.length
+      }
+
+      get state(){
+
+        return _gameArr;
+      }
+
+    }
+
+    return new GameState();
+
+
+  }
+
+
   static ticTac$CreateStateMachine(movesArr=[]){
 
      const getSquareVal = (n=0) => ["X","O"][n%2];
@@ -192,7 +227,7 @@ export class TicTacToeTraits extends SpyneTrait {
           currentSquareVal: _squareVal,
           moveNum:          _moveNum
         };
-       // console.log(obj, )
+        console.log(obj, JSON.stringify(_movesArr))
         return obj;
       }
 
