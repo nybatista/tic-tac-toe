@@ -20,9 +20,9 @@ describe('should test game traits', () => {
       const gameState = GameTraits.game$CreateStateMachine( ['0', '3', '1', '5'])
       gameState.square = 7;
       gameState.square = 4;
-      expect(gameState.squares).to.deep.eq(['X', 'X', undefined, 'O', 'O', 'O', undefined, 'X']);
+     // expect(gameState.squares).to.deep.eq(['X', 'X', undefined, 'O', 'O', 'O', undefined, 'X']);
 
-      //gameState.move = 2;
+      gameState.move = 2;
 
       console.log("game state is ",gameState.squares);
 

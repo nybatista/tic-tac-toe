@@ -34,6 +34,7 @@ export class GameTraits extends SpyneTrait {
 
       set move(n=0){
         _lastMove = parseInt(n);
+        console.log('last move is ',_lastMove);
       }
 
       get squares(){
@@ -41,7 +42,7 @@ export class GameTraits extends SpyneTrait {
           acc[val] = xoFn(i); return acc
         };
 
-        const squaresArr = _movesArr.toSpliced(_lastMove, 1);
+        const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length);
 
         console.log('squares arr is ',{_lastMove, squaresArr, _movesArr})
         return squaresArr.reduce(reduceToXO, []);
