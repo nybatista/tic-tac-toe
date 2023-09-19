@@ -1,5 +1,6 @@
 import {Channel, ChannelPayloadFilter} from 'spyne';
 import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
+import {GameTraits} from 'traits/game-traits';
 
 export class ChannelTicTacToe extends Channel{
 

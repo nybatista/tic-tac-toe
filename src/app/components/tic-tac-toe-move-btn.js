@@ -4,7 +4,10 @@ export class TicTacToeMoveBtn extends ViewStream {
 
     constructor(props={}) {
       props.tagName = 'li';
-      props.template = `<button data-type='move' data-num=${props.moveNum} data-move-num=${props.moveNum}>${props.text}</button>`
+      props.template = `<button data-type='move' data-num=${props.moveNum} data-move=${props.moveNum} data-move-num=${props.moveNum}
+
+
+    >${props.text}</button>`
       super(props);
     }
 

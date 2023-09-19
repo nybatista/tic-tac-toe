@@ -12,25 +12,28 @@ export class GameTraits extends SpyneTrait {
     super(context, traitPrefix);
   }
 
-  static game$GetMoveBtnText(num=0){
-    return num === 0 ? "Go to game start" : `Go to move #${num}`;
+
+
+  static game$UpdateBoard(state, props=this.props){
+    const {squares, winner,moveNum, isWinner, nextSquareVal, statusText, moveBtnText} = state;
+    this.props.el$('.status').el.innerText = statusText;
+    this.appendView(new TicTacToeMoveBtn( {moveBtnText, moveNum}), "ol");
+
+    const updateSquare = (el)=>{
+      const {squareNum} = el.dataset;
+      el.innerText = squares[squareNum] || '';
+      el.style.classList.toggle('empty', squares[squareNum] === undefined);
+      console.log('squares ',{squares, squareNum}, squares[squareNum])
+
+    }
+    this.props.el$('.square').arr.forEach(updateSquare);
+
+
   }
-  static game$GetStatusText(state={isWinner:false, nextSquareVal:"X"}){
-    return state.isWinner ? `Winner: ${state.currentSquareVal}` : `Next player: ${state.nextSquareVal}`;
-  }
-
-  static game$CreateMoveItem(e={payload:{moveNum: 0}}){
-    const {moveNum} = e.payload;
-    const text = this.game$GetMoveBtnText(moveNum);
-    this.appendView(new TicTacToeMoveBtn( {text, moveNum}), "ol");
-
-  }
 
 
 
-  static game$UpdateStatusText(e={payload:{isWinner:false, nextSquareVal:"X"}}, props=this.props){
-    this.props.el$('.status').el.innerText = this.game$GetStatusText(e.payload);
-  }
+
 
 
   static game$CreateStateMachine(movesArr=[]){
@@ -74,12 +77,13 @@ export class GameTraits extends SpyneTrait {
 
       get state(){
          const {squares} = this;
+         const moveNum = _lastMove;
          const winner = this.calculateWinner();
          const isWinner = winner !== undefined;
          const nextSquareVal = xoFn(_lastMove);
          const statusText = isWinner ? `Winner: ${winner}` : `Next player: ${nextSquareVal}`;
-         const moveBtnText =  _lastMove === 0 ? "Go to game start" : `Go to move #${_lastMove}`;
-        return {squares, winner, isWinner, nextSquareVal, statusText, moveBtnText};
+         const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
+        return {squares, winner, isWinner,moveNum, nextSquareVal, statusText, moveBtnText};
       }
 
       calculateWinner(xoArr=this.squares){
