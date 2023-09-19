@@ -9,16 +9,21 @@ export class ChannelTicTacToe extends Channel{
     props.sendCachedPayload = true;
     props.traits = [TicTacToeTraits, GameTraits];
     props.stateMachine = GameTraits.game$CreateStateMachine();
-
     super(name, props);
+  }
+
+
+  sendCurrentState(action="CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT"){
+    const {state} = this.props.stateMachine;
+    this.sendChannelPayload(action, state);
   }
 
   sendUpdateBoardAction(type, num){
     this.props.stateMachine[`${type}`] = num;
-    const {state} = this.props.stateMachine;
     const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
-    this.sendChannelPayload(action, state);
+    this.sendCurrentState(action);
   }
+
 
   onBtnClicked(e){
     const {type, squareNum, moveNum} = e.payload;
@@ -28,22 +33,14 @@ export class ChannelTicTacToe extends Channel{
 
   onRegistered(){
 
-    const payloadFilter = new ChannelPayloadFilter({
-      payload: v => ['square', 'move'].includes(v.type),
-      srcElement: e =>  e.el.innerText === '' && this.props.stateMachine.state.isWinner===false || e.el.dataset.moveNum !== undefined
-    })
 
-    const selectorPF = new ChannelPayloadFilter({
-      selector: ['.empty', '.move-btn']
-    })
-
-
-    this.getChannel("CHANNEL_UI", selectorPF)
+    this.getChannel("CHANNEL_UI",
+        new ChannelPayloadFilter(
+        {selector: ['.empty', '.move-btn']}))
         .subscribe(this.onBtnClicked.bind(this));
-    const {state} = this.props.stateMachine;
-    const action = `CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT`;
-    console.log("SEND CHANNEL PAYLOAD ",{action, state})
-    this.sendChannelPayload(action, state);
+
+     this.sendCurrentState();
+
 
   }
 
