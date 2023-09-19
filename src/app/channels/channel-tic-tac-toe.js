@@ -1,5 +1,4 @@
 import {Channel, ChannelPayloadFilter} from 'spyne';
-import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
 import {GameTraits} from 'traits/game-traits';
 
 export class ChannelTicTacToe extends Channel{
@@ -7,11 +6,10 @@ export class ChannelTicTacToe extends Channel{
   constructor(name, props={}) {
     name="CHANNEL_TIC_TAC_TOE";
     props.sendCachedPayload = true;
-    props.traits = [TicTacToeTraits, GameTraits];
+    props.traits = [GameTraits];
     props.stateMachine = GameTraits.game$CreateStateMachine();
     super(name, props);
   }
-
 
   sendCurrentState(action="CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT"){
     const {state} = this.props.stateMachine;
@@ -24,7 +22,6 @@ export class ChannelTicTacToe extends Channel{
     this.sendCurrentState(action);
   }
 
-
   onBtnClicked(e){
     const {type, squareNum, moveNum} = e.payload;
     const num = type === 'square' ? squareNum : moveNum;
@@ -32,7 +29,6 @@ export class ChannelTicTacToe extends Channel{
   }
 
   onRegistered(){
-
 
     this.getChannel("CHANNEL_UI",
         new ChannelPayloadFilter(

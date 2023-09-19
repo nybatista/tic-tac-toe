@@ -8,11 +8,8 @@ export class GameTraits extends SpyneTrait {
 
   constructor(context){
     let traitPrefix = "game$";
-
     super(context, traitPrefix);
   }
-
-
 
   static game$UpdateBoard(e, props=this.props){
 
@@ -36,10 +33,6 @@ export class GameTraits extends SpyneTrait {
   }
 
 
-
-
-
-
   static game$CreateStateMachine(movesArr=[]){
 
     let _movesArr = movesArr;
@@ -56,13 +49,11 @@ export class GameTraits extends SpyneTrait {
       set square(n=0){
           _movesArr.splice(_lastMove, _movesArr.length, n);
           _lastMove = _movesArr.length;
-        //console.log("moves arr ",{_movesArr,n});
 
       }
 
       set move(n=0){
         _lastMove = parseInt(n);
-        //console.log('last move is ',_lastMove);
       }
 
       get squares(){
@@ -70,12 +61,8 @@ export class GameTraits extends SpyneTrait {
           acc[val] = xoFn(i); return acc
         };
 
-        //const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length);
-        const squaresArr = _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
+        return _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
 
-        //console.log('squares arr is ',{_lastMove, squaresArr, _movesArr})
-        return squaresArr;
-        //return squaresArr.reduce(reduceToXO, []);
       }
 
 
@@ -107,11 +94,7 @@ export class GameTraits extends SpyneTrait {
           acc = acc === undefined && /^(X{3}|O{3})$/.test(getXOMatch(item)) ? getXOMatch(item)[0] : acc;
           return acc;
         };
-        const winner = lines.reduce(reducer, undefined);
-
-        console.log("winner is ",winner);
-
-        return winner;
+        return lines.reduce(reducer, undefined);;
 
       }
 

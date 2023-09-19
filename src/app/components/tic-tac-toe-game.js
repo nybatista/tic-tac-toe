@@ -1,12 +1,11 @@
 import {ViewStream} from 'spyne';
-import {TicTacToeTraits} from 'traits/tic-tac-toe-traits';
 import {GameTraits} from 'traits/game-traits';
 
 export class TicTacToeGame extends ViewStream {
 
     constructor(props={}) {
         props.el = document.querySelector('.game');
-        props.traits = [TicTacToeTraits, GameTraits];
+        props.traits = [GameTraits];
         super(props);
     }
 
@@ -17,24 +16,12 @@ export class TicTacToeGame extends ViewStream {
     ];
   }
 
-  onUpdateGameBySquare(e){
-
-
-  }
-  onUpdateGameByMove(e){
-
-
-  }
-
   broadcastEvents() {
     return [['button.square', 'click']];
   }
 
-
     onRendered() {
       this.addChannel("CHANNEL_TIC_TAC_TOE");
-      //this.ticTac$UpdateStatusText();
-      //this.ticTac$CreateMoveItem();
     }
 
 }
