@@ -4,7 +4,8 @@ export class TicTacToeMoveBtn extends ViewStream {
 
     constructor(props={}) {
       props.tagName = 'li';
-      props.template = `<button data-type='move' data-num=${props.moveNum} data-move=${props.moveNum} data-move-num=${props.moveNum}
+      props.className =
+      props.template = `<button class="move-btn" data-type='move' data-num=${props.moveNum} data-move=${props.moveNum} data-move-num=${props.moveNum}
 
 
     >${props.moveBtnText}</button>`
@@ -24,7 +25,7 @@ export class TicTacToeMoveBtn extends ViewStream {
     }
 
     onRendered() {
-      this.addChannel("CHANNEL_TIC_TAC_TOE");
+      this.addChannel("CHANNEL_TIC_TAC_TOE", true);
     }
 
 }

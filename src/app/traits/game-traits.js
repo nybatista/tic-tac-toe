@@ -26,7 +26,7 @@ export class GameTraits extends SpyneTrait {
     const updateSquare = (el)=>{
       const {squareNum} = el.dataset;
       el.innerText = squares[squareNum] || '';
-      el.classList.toggle('empty', squares[squareNum] === undefined);
+      el.classList.toggle('empty', squares[squareNum] === undefined && isWinner === false);
       console.log('squares ',el,{squares, squareNum}, squares[squareNum])
 
     }

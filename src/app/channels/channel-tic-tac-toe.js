@@ -6,7 +6,7 @@ export class ChannelTicTacToe extends Channel{
 
   constructor(name, props={}) {
     name="CHANNEL_TIC_TAC_TOE";
-    props.sendCachedPayload = false;
+    props.sendCachedPayload = true;
     props.traits = [TicTacToeTraits, GameTraits];
     props.stateMachine = GameTraits.game$CreateStateMachine();
 
@@ -33,31 +33,17 @@ export class ChannelTicTacToe extends Channel{
       srcElement: e =>  e.el.innerText === '' && this.props.stateMachine.state.isWinner===false || e.el.dataset.moveNum !== undefined
     })
 
-    this.getChannel("CHANNEL_UI", payloadFilter)
-        .subscribe(this.onBtnClicked.bind(this));
-
-
-    const onRoute = ()=>{
-      const {state} = this.props.stateMachine;
-      const action = `CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT`;
-      console.log("SEND CHANNEL PAYLOAD ",{action, state})
-      const onWait = ()=>this.sendChannelPayload(action, state);
-      //onWait();
-      //window.setTimeout(onWait, 500);
-      requestAnimationFrame(onWait);
-
-    }
-
-    onRoute();
-
-/*    const routePL = new ChannelPayloadFilter({
-      action: "CHANNEL_ROUTE_DEEPLINK_EVENT"
+    const selectorPF = new ChannelPayloadFilter({
+      selector: ['.empty', '.move-btn']
     })
 
 
-
-      this.getChannel("CHANNEL_ROUTE", routePL)
-          .subscribe(onRoute);*/
+    this.getChannel("CHANNEL_UI", selectorPF)
+        .subscribe(this.onBtnClicked.bind(this));
+    const {state} = this.props.stateMachine;
+    const action = `CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT`;
+    console.log("SEND CHANNEL PAYLOAD ",{action, state})
+    this.sendChannelPayload(action, state);
 
   }
 
