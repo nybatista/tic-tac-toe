@@ -7,7 +7,7 @@ export class TicTacToeMoveBtn extends ViewStream {
       props.template = `<button data-type='move' data-num=${props.moveNum} data-move=${props.moveNum} data-move-num=${props.moveNum}
 
 
-    >${props.text}</button>`
+    >${props.moveBtnText}</button>`
       super(props);
     }
 
@@ -15,7 +15,7 @@ export class TicTacToeMoveBtn extends ViewStream {
       const payloadFilter = new ChannelPayloadFilter({
         payload: v => v.moveNum<=this.props.moveNum
       });
-      return [["CHANNEL_TIC_TAC_TOE_SQUARE_CLICK_EVENT", "disposeViewStream", payloadFilter]];
+      return [["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "disposeViewStream", payloadFilter]];
     }
 
 

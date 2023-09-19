@@ -15,13 +15,13 @@ const config = {
 
 SpyneApp.init(config);
 
-SpyneApp.registerChannel(new ChannelTicTacToe());
 
 
 if (process.env.NODE_ENV === 'development') {
   const {SpynePluginConsole} = require('spyne-plugin-console');
   new SpynePluginConsole({position: ['bottom', 'right'], minimize: true});
 }
+SpyneApp.registerChannel(new ChannelTicTacToe());
 
 //new AppView().prependToDom(document.body);
 new TicTacToeGame();

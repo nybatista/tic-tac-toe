@@ -14,20 +14,24 @@ export class GameTraits extends SpyneTrait {
 
 
 
-  static game$UpdateBoard(state, props=this.props){
-    const {squares, winner,moveNum, isWinner, nextSquareVal, statusText, moveBtnText} = state;
-    this.props.el$('.status').el.innerText = statusText;
-    this.appendView(new TicTacToeMoveBtn( {moveBtnText, moveNum}), "ol");
+  static game$UpdateBoard(e, props=this.props){
 
+    const {action, payload} = e;
+    const {squares, winner,moveNum, isWinner, nextSquareVal, statusText, moveBtnText} = payload;
+    this.props.el$('.status').el.innerText = statusText;
+
+    if (action === "CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT") {
+      this.appendView(new TicTacToeMoveBtn({moveBtnText, moveNum}), "ol");
+    }
     const updateSquare = (el)=>{
       const {squareNum} = el.dataset;
       el.innerText = squares[squareNum] || '';
-      el.style.classList.toggle('empty', squares[squareNum] === undefined);
-      console.log('squares ',{squares, squareNum}, squares[squareNum])
+      el.classList.toggle('empty', squares[squareNum] === undefined);
+      console.log('squares ',el,{squares, squareNum}, squares[squareNum])
 
     }
     this.props.el$('.square').arr.forEach(updateSquare);
-
+    console.log("STATE VALS ",{e, squares, winner,moveNum, isWinner, nextSquareVal, statusText, moveBtnText})
 
   }
 
