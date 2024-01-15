@@ -54,8 +54,8 @@ describe('should test game traits', () => {
           expect(defaultState.squares).to.deep.eq([]);
           expect(defaultState.winner).to.eq(undefined);
           expect(defaultState.isWinner).to.be.false;
-          expect(defaultState.statusText).to.eq('Next player: X');
-          expect(defaultState.moveBtnText).to.eq('Go to game start');
+          //expect(defaultState.statusText).to.eq('Next player: X');
+          //expect(defaultState.moveBtnText).to.eq('Go to game start');
 
           //console.log("new game is ",defaultState);
           return true;
@@ -68,8 +68,8 @@ describe('should test game traits', () => {
           expect(xState.squares).to.deep.eq([undefined, undefined, 'X']);
           expect(xState.winner).to.eq(undefined);
           expect(xState.isWinner).to.be.false;
-          expect(xState.statusText).to.eq('Next player: O');
-          expect(xState.moveBtnText).to.eq('Go to move #1');
+          //expect(xState.statusText).to.eq('Next player: O');
+          //expect(xState.moveBtnText).to.eq('Go to move #1');
 
           //console.log("x game is ",xState);
 
@@ -83,8 +83,8 @@ describe('should test game traits', () => {
           expect(oState.squares).to.deep.eq([undefined, undefined, 'X', undefined, 'O']);
           expect(oState.winner).to.eq(undefined);
           expect(oState.isWinner).to.be.false;
-          expect(oState.statusText).to.eq('Next player: X');
-          expect(oState.moveBtnText).to.eq('Go to move #2');
+          //expect(oState.statusText).to.eq('Next player: X');
+          //expect(oState.moveBtnText).to.eq('Go to move #2');
 
           //console.log("o game is ",oState);
 
@@ -102,8 +102,8 @@ describe('should test game traits', () => {
           expect(xWinner.squares).to.deep.eq(['X', 'X', 'X', undefined, 'O', 'O']);
           expect(xWinner.winner).to.eq('X');
           expect(xWinner.isWinner).to.be.true;
-          expect(xWinner.statusText).to.eq('Winner: X');
-          expect(xWinner.moveBtnText).to.eq('Go to move #5');
+          //expect(xWinner.statusText).to.eq('Winner: X');
+          //expect(xWinner.moveBtnText).to.eq('Go to move #5');
 
           console.log("xWinner ",xWinner);
 
@@ -123,8 +123,8 @@ describe('should test game traits', () => {
         expect(oWinner.squares).to.deep.eq([undefined, 'O', 'X', undefined, 'O', 'X', 'X', 'O']);
         expect(oWinner.winner).to.eq('O');
         expect(oWinner.isWinner).to.be.true;
-        expect(oWinner.statusText).to.eq('Winner: O');
-        expect(oWinner.moveBtnText).to.eq('Go to move #6');
+        //expect(oWinner.statusText).to.eq('Winner: O');
+        //expect(oWinner.moveBtnText).to.eq('Go to move #6');
 
         console.log("oWinner ",oWinner);
 

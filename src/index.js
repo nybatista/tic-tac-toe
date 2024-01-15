@@ -1,4 +1,4 @@
-import'./scss/main.scss';
+//import'./scss/main.scss';
 import {SpyneApp, ViewStream} from 'spyne';
 import {TicTacToeGame} from 'components/tic-tac-toe-game';
 import {ChannelTicTacToe} from 'channels/channel-tic-tac-toe';

@@ -16,16 +16,19 @@ export class ChannelTicTacToe extends Channel{
     this.sendChannelPayload(action, state);
   }
 
-  sendUpdateBoardAction(type, num){
-    this.props.stateMachine[`${type}`] = num;
-    const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
-    this.sendCurrentState(action);
-  }
+
 
   onBtnClicked(e){
+    const updateBoard = (type, num)=>{
+      this.props.stateMachine[`${type}`] = num;
+      const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
+      this.sendCurrentState(action);
+
+    }
+
     const {type, squareNum, moveNum} = e.payload;
     const num = type === 'square' ? squareNum : moveNum;
-    this.sendUpdateBoardAction(type, num);
+    updateBoard(type, num);
   }
 
   onRegistered(){
@@ -36,7 +39,6 @@ export class ChannelTicTacToe extends Channel{
         .subscribe(this.onBtnClicked.bind(this));
 
      this.sendCurrentState();
-
 
   }
 
