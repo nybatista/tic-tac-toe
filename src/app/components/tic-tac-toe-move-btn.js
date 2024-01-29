@@ -4,6 +4,12 @@ export class TicTacToeMoveBtn extends ViewStream {
 
     constructor(props={}) {
       props.tagName = 'li';
+
+      /**
+       * TODO: Create static methods to return moveBtnText and template
+       *
+       * */
+
       props.moveBtnText =  props.moveNum === 0 ? "Go to game start" : `Go to move #${props.moveNum}`;
       props.template = `<button class="move-btn" data-type='move' data-num=${props.moveNum} data-move=${props.moveNum} data-move-num=${props.moveNum}>${props.moveBtnText}</button>`
       super(props);

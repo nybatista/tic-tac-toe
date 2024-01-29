@@ -1,7 +1,7 @@
 {
-  "name": "spyne-hello-world-app",
+  "name": "spyne-tic-tac-toe",
   "version": "0.0.5",
-  "description": "Bare bones spyne application.",
+  "description": "Tic Tac Toe compared to React's tutorial.",
   "main": "src/index.js",
   "scripts": {
     "init": "npm install && npm i -D mocha --force",

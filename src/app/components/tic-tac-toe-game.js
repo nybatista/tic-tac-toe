@@ -10,6 +10,11 @@ export class TicTacToeGame extends ViewStream {
     }
 
   addActionListeners() {
+      /**
+       * TODO: USE REGEX TO ADD JUST ONE ACTION
+       *
+       * */
+
     return [
       ["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "game$UpdateBoard"],
       ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateBoard"]
