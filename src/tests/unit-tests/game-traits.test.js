@@ -1,23 +1,23 @@
 const {expect, assert} = require('chai');
-import {GameTraits} from 'traits/game-traits';
+import {TicTacToeTraits} from '../../app/tic-tac-toe-traits';
 
 describe('should test game traits', () => {
 
   it('game traits should exist', () => {
-   expect(GameTraits).to.be.a('function');
+   expect(TicTacToeTraits).to.be.a('function');
   });
 
 
   describe('it should test game state machine',()=>{
 
     it('should create state machine', ()=>{
-       const gameState = GameTraits.game$CreateStateMachine();
+       const gameState = TicTacToeTraits.game$CreateStateMachine();
       expect(gameState).to.be.a('object');
 
     })
 
     it('should return correct squares arr by adding squares',()=>{
-      const gameState = GameTraits.game$CreateStateMachine( ['0', '3', '1', '5'])
+      const gameState = TicTacToeTraits.game$CreateStateMachine( ['0', '3', '1', '5'])
       gameState.square = 7;
       gameState.square = 4;
      // expect(gameState.squares).to.deep.eq(['X', 'X', undefined, 'O', 'O', 'O', undefined, 'X']);
@@ -40,14 +40,11 @@ describe('should test game traits', () => {
   });
 
   describe('it should test game state', ()=>{
-    const gameState = GameTraits.game$CreateStateMachine( [0,4,1,5,2])
-
-
-    console.log("game state is ",gameState.state);
+    const gameState = TicTacToeTraits.game$CreateStateMachine( [0,4,1,5,2])
 
 
     describe('it should test game status text',()=>{
-      const game = GameTraits.game$CreateStateMachine();
+      const game = TicTacToeTraits.game$CreateStateMachine();
 
         it('it should return default status on zero moves', ()=>{
           const defaultState = game.state;
@@ -105,7 +102,6 @@ describe('should test game traits', () => {
           //expect(xWinner.statusText).to.eq('Winner: X');
           //expect(xWinner.moveBtnText).to.eq('Go to move #5');
 
-          console.log("xWinner ",xWinner);
 
         })
 
@@ -126,7 +122,6 @@ describe('should test game traits', () => {
         //expect(oWinner.statusText).to.eq('Winner: O');
         //expect(oWinner.moveBtnText).to.eq('Go to move #6');
 
-        console.log("oWinner ",oWinner);
 
       })
 

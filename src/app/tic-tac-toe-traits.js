@@ -1,12 +1,52 @@
-import {SpyneTrait} from 'spyne';
-import {TicTacToeMoveBtn} from 'components/tic-tac-toe-move-btn';
+import {ChannelPayloadFilter, SpyneTrait, ViewStream} from 'spyne';
+import {MoveBtn} from "../index";
 
-export class GameTraits extends SpyneTrait {
+
+export class TicTacToeTraits extends SpyneTrait {
 
   constructor(context){
     let traitPrefix = "game$";
     super(context, traitPrefix);
   }
+
+
+  static game$CreateMoveBtn(moveNum){
+    const createMoveBtnTemplate = ()=>{
+      const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
+      return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
+    }
+
+    const template = createMoveBtnTemplate();
+    this.appendView(new MoveBtn({moveNum, template}), "ol");
+
+  }
+
+  static game$GetGameboardTemplate(){
+    return `
+        <div class="game-board">
+            <div class="status">status</div>
+            <div class="board-row">
+                <button class="square square-0" data-type="square" data-square-num=0></button>
+                <button class="square square-1" data-type="square" data-square-num=1></button>
+                <button class="square square-2" data-type="square" data-square-num=2></button>
+            </div>
+            <div class="board-row">
+                <button class="square square-3" data-type="square" data-square-num=3></button>
+                <button class="square square-4" data-type="square" data-square-num=4></button>
+                <button class="square square-5" data-type="square" data-square-num=5></button>
+            </div>
+            <div class="board-row">
+                <button class="square square-6" data-type="square" data-square-num=6></button>
+                <button class="square square-7" data-type="square" data-square-num=7></button>
+                <button class="square square-8" data-type="square" data-square-num=8></button>
+            </div>
+        </div>
+        <div class="game-info"><ol></ol>
+        </div>
+        `
+
+  }
+
 
   static game$UpdateBoard(e, props=this.props){
     const {action, payload} = e;
@@ -17,7 +57,7 @@ export class GameTraits extends SpyneTrait {
      * TODO: CREATE MOVE FLAG based on btnType click payload
      * */
     if (action === "CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT") {
-      this.appendView(new TicTacToeMoveBtn({moveNum}), "ol");
+      this.game$CreateMoveBtn(moveNum);
     }
 
     const updateSquare = (el)=>{
@@ -28,6 +68,14 @@ export class GameTraits extends SpyneTrait {
 
     this.props.el$('.square').arr.forEach(updateSquare);
   }
+
+
+
+
+
+
+
+
 
   static game$CreateStateMachine(movesArr=[]){
     let _movesArr = movesArr;

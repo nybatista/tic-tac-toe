@@ -1,13 +1,13 @@
 import {Channel, ChannelPayloadFilter} from 'spyne';
-import {GameTraits} from 'traits/game-traits';
+import {TicTacToeTraits} from './tic-tac-toe-traits';
 
-export class ChannelTicTacToe extends Channel{
+export class TicTacToeChannel extends Channel{
 
   constructor(name, props={}) {
     name="CHANNEL_TIC_TAC_TOE";
     props.sendCachedPayload = true;
-    props.traits = [GameTraits];
-    props.stateMachine = GameTraits.game$CreateStateMachine();
+    props.traits = [TicTacToeTraits];
+    props.stateMachine = TicTacToeTraits.game$CreateStateMachine();
     super(name, props);
   }
 

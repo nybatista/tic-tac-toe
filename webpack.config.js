@@ -24,7 +24,6 @@ module.exports = (env={mode:"development"})=> {
   _buildType =      process.env.buildType;
   _publicPath =     _isProduction ?  _relativeRoot : "/";
   _assetsFolder =   _isProduction ? `${_defaultAssetsDirName}/` : "";
-  _imgPath =        `${_publicPath}${_assetsFolder}static/imgs/`;
 
   const config = {
     mode,
@@ -42,9 +41,6 @@ module.exports = (env={mode:"development"})=> {
     devtool:  _isProduction ? false : 'inline-cheap-source-map',
 
     devServer: {
-      static: {
-        directory: 'src',
-      },
       historyApiFallback: true,
       port
     },
@@ -119,9 +115,6 @@ module.exports = (env={mode:"development"})=> {
     resolve: {
       alias: {
         plugins: path.resolve(__dirname, 'src/plugins/'),
-        imgs: path.resolve(__dirname, 'src/static/imgs/'),
-        fonts: path.resolve(__dirname, 'src/static/fonts/'),
-        data: path.resolve(__dirname, '/./src/static/data/'),
         css: path.resolve(__dirname, 'src/css/'),
         core: path.resolve(__dirname, 'src/core/'),
         traits: path.resolve(__dirname, 'src/app/traits/'),
@@ -158,21 +151,10 @@ const getWebpackPlugins = ()=> {
     minify: false
   });
 
-  const getCopyPatternsPlugin = () => {
-    const patterns = [
-      {from: "./src/static/imgs", to: `${_assetsFolder}static/imgs`}
-    ]
 
-    if (_buildType === 'apache') {
-      patterns.push(
-          {from: "./apache-htaccess", to: ".htaccess", toType: "file"})
-    }
-
-    return new CopyWebpackPlugin({patterns})
-  }
 
   return _isProduction ?
-      [htmlPlugin, definePlugin, miniCssPlugin(), getCopyPatternsPlugin()] :
+      [htmlPlugin, definePlugin, miniCssPlugin()] :
       [htmlPlugin, definePlugin];
 
 }
