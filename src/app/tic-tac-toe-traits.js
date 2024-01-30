@@ -1,83 +1,14 @@
-import {ChannelPayloadFilter, SpyneTrait, ViewStream} from 'spyne';
-import {MoveBtn} from "../index";
+import {SpyneTrait} from 'spyne';
 
-
-export class GameViewTraits extends SpyneTrait {
+export class TicTacToeTraits extends SpyneTrait {
 
   constructor(context){
-    let traitPrefix = "game$";
+    let traitPrefix = "ticTacToe$";
+
     super(context, traitPrefix);
   }
 
-
-  static game$CreateMoveBtn(moveNum){
-    const createMoveBtnTemplate = ()=>{
-      const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
-      return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
-    }
-
-    const template = createMoveBtnTemplate();
-    this.appendView(new MoveBtn({moveNum, template}), "ol");
-
-  }
-
-  static game$GetGameboardTemplate(){
-    return `
-        <div class="game-board">
-            <div class="status">status</div>
-            <div class="board-row">
-                <button class="square square-0" data-type="square" data-square-num=0></button>
-                <button class="square square-1" data-type="square" data-square-num=1></button>
-                <button class="square square-2" data-type="square" data-square-num=2></button>
-            </div>
-            <div class="board-row">
-                <button class="square square-3" data-type="square" data-square-num=3></button>
-                <button class="square square-4" data-type="square" data-square-num=4></button>
-                <button class="square square-5" data-type="square" data-square-num=5></button>
-            </div>
-            <div class="board-row">
-                <button class="square square-6" data-type="square" data-square-num=6></button>
-                <button class="square square-7" data-type="square" data-square-num=7></button>
-                <button class="square square-8" data-type="square" data-square-num=8></button>
-            </div>
-        </div>
-        <div class="game-info"><ol></ol>
-        </div>
-        `
-
-  }
-
-
-  static game$UpdateBoard(e, props=this.props){
-    const {action, payload} = e;
-    const {squares, winner,moveNum, isWinner, nextSquareVal} = payload;
-    this.props.el$('.status').el.innerText =  isWinner ? `Winner: ${winner}` : `Next player: ${nextSquareVal}`;
-
-    /**
-     * TODO: CREATE MOVE FLAG based on btnType click payload
-     * */
-    if (action === "CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT") {
-      this.game$CreateMoveBtn(moveNum);
-    }
-
-    const updateSquare = (el)=>{
-      const {squareNum} = el.dataset;
-      el.innerText = squares[squareNum] || '';
-      el.classList.toggle('empty', squares[squareNum] === undefined && isWinner === false);
-    }
-
-    this.props.el$('.square').arr.forEach(updateSquare);
-  }
-
-
-
-
-
-
-
-
-
-  static game$CreateStateMachine(movesArr=[]){
+  static ticTacToe$CreateStateMachine(movesArr=[]){
     let _movesArr = movesArr;
     let _lastMove = movesArr.length;
     const xoFn = (n=0) => n % 2 === 0 ? "X" : "O";
@@ -85,8 +16,8 @@ export class GameViewTraits extends SpyneTrait {
     class GameState{
 
       set square(n=0){
-          _movesArr.splice(_lastMove, _movesArr.length, n);
-          _lastMove = _movesArr.length;
+        _movesArr.splice(_lastMove, _movesArr.length, n);
+        _lastMove = _movesArr.length;
       }
 
       set move(n=0){
@@ -104,11 +35,11 @@ export class GameViewTraits extends SpyneTrait {
 
 
       get state(){
-         const {squares} = this;
-         const moveNum = _lastMove;
-         const winner = this.calculateWinner();
-         const isWinner = winner !== undefined;
-         const nextSquareVal = xoFn(_lastMove);
+        const {squares} = this;
+        const moveNum = _lastMove;
+        const winner = this.calculateWinner();
+        const isWinner = winner !== undefined;
+        const nextSquareVal = xoFn(_lastMove);
         return {squares, winner, isWinner, moveNum, nextSquareVal};
       }
 
@@ -140,4 +71,29 @@ export class GameViewTraits extends SpyneTrait {
     return new GameState();
 
   }
+
+  static ticTacToe$SendGameState(action="CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT"){
+    const {state} = this.props.stateMachine;
+    this.sendChannelPayload(action, state);
+  }
+
+  static ticTacToe$UpdateGameState(e){
+    const {type, squareNum, moveNum} = e.payload;
+    this.props.stateMachine[`${type}`] = type === 'square' ? squareNum : moveNum;
+
+    const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
+
+    this.sendCurrentState(action);
+
+  }
+
+  static ticTacToe$OnGameBtnClicked(e){
+    const {type, squareNum, moveNum} = e.payload;
+    const num = type === 'square' ? squareNum : moveNum;
+
+
+  }
+
+
 }
+

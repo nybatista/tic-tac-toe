@@ -16,17 +16,6 @@ export class GameViewTraits extends SpyneTrait {
 
   }
 
-  static game$CreateMoveBtn(moveNum){
-    const createMoveBtnTemplate = ()=>{
-      const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
-      return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
-    }
-
-    const template = createMoveBtnTemplate();
-   // this.appendView(new MoveBtn({moveNum, template}), "ol");
-
-  }
-
   static game$GetGameboardTemplate(){
     return `
         <div class="game-board">
@@ -72,72 +61,4 @@ export class GameViewTraits extends SpyneTrait {
 
 
 
-
-
-
-
-
-  static game$CreateStateMachine(movesArr=[]){
-    let _movesArr = movesArr;
-    let _lastMove = movesArr.length;
-    const xoFn = (n=0) => n % 2 === 0 ? "X" : "O";
-
-    class GameState{
-
-      set square(n=0){
-          _movesArr.splice(_lastMove, _movesArr.length, n);
-          _lastMove = _movesArr.length;
-      }
-
-      set move(n=0){
-        _lastMove = parseInt(n);
-      }
-
-      get squares(){
-        const reduceToXO =  (acc, val, i)=>{
-          acc[val] = xoFn(i); return acc
-        };
-
-        return _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
-
-      }
-
-
-      get state(){
-         const {squares} = this;
-         const moveNum = _lastMove;
-         const winner = this.calculateWinner();
-         const isWinner = winner !== undefined;
-         const nextSquareVal = xoFn(_lastMove);
-        return {squares, winner, isWinner, moveNum, nextSquareVal};
-      }
-
-      calculateWinner(xoArr=this.squares){
-
-        const lines = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
-          [2, 4, 6]
-        ];
-
-        const getXOMatch = arr => arr.map(val =>xoArr[val]).join('');
-
-        const reducer = (acc, item)=>{
-          acc = acc === undefined && /^(X{3}|O{3})$/.test(getXOMatch(item)) ? getXOMatch(item)[0] : acc;
-          return acc;
-        };
-
-        return lines.reduce(reducer, undefined);;
-
-      }
-    }
-
-    return new GameState();
-
-  }
 }
