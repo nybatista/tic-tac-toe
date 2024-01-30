@@ -34,17 +34,30 @@ export class GameViewTraits extends SpyneTrait {
   }
 
 
-  static game$UpdateBoard(e, props=this.props){
+
+  static game$UpdateGameSquares(e, props=this.props){
     const {squares, winner, isWinner, nextSquareVal} = e.payload;
+
+    // UPDATE GAME STATUS TEXT
     this.props.el$('.status').el.innerText =  isWinner ? `Winner: ${winner}` : `Next player: ${nextSquareVal}`;
 
-    const updateSquare = (el)=>{
+
+    const updateGameSquare = (el)=>{
       const {squareNum} = el.dataset;
       el.innerText = squares[squareNum] || '';
       el.classList.toggle('empty', squares[squareNum] === undefined && isWinner === false);
     }
+    props.squaresArr.forEach(updateGameSquare);
 
-    props.el$('.square').arr.forEach(updateSquare);
+
+  }
+
+  static game$CreateMoveBtn(e){
+    const {moveNum} = e.payload;
+    const template = this.game$GetMoveNumBtnTemplate(moveNum);
+    this.appendView(new MoveBtn({moveNum, template}), "ol");
+    this.game$UpdateGameSquares(e);
+
   }
 
   static game$GetMoveNumBtnTemplate(moveNum){
@@ -53,13 +66,7 @@ export class GameViewTraits extends SpyneTrait {
 
   }
 
-  static game$CreateMoveBtn(e){
-    const {moveNum} = e.payload;
-    const template = this.game$GetMoveNumBtnTemplate(moveNum);
-    this.appendView(new MoveBtn({moveNum, template}), "ol");
-    this.game$UpdateBoard(e);
 
-  }
 
 
 }

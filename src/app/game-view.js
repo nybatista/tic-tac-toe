@@ -4,8 +4,8 @@ import {GameViewTraits} from './game-view-traits';
 export class GameView extends ViewStream {
 
   constructor(props={}) {
-    props.traits = [GameViewTraits];
     props.class = "game";
+    props.traits = [GameViewTraits];
     props.template = GameViewTraits.game$GetGameboardTemplate();
     super(props);
   }
@@ -13,19 +13,25 @@ export class GameView extends ViewStream {
   addActionListeners() {
     return [
       ["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "game$CreateMoveBtn"],
-      ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateBoard"]
+      ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateGameSquares"]
     ];
   }
 
   broadcastEvents() {
-    return [['button.square', 'click']];
+    return [
+        ['button.square', 'click']
+    ];
   }
 
   onRendered() {
+    this.props.squaresArr = this.props.el$(".square").arr;
     this.addChannel("CHANNEL_TIC_TAC_TOE");
   }
 
 }
+
+
+
 
 export class MoveBtn extends ViewStream {
 
@@ -42,7 +48,9 @@ export class MoveBtn extends ViewStream {
   }
 
   broadcastEvents() {
-    return [['button' , 'click']];
+    return [
+        ['button' , 'click']
+    ];
   }
 
   onRendered() {
