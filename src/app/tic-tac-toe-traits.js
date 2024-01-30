@@ -4,7 +4,6 @@ export class TicTacToeTraits extends SpyneTrait {
 
   constructor(context){
     let traitPrefix = "ticTacToe$";
-
     super(context, traitPrefix);
   }
 
@@ -83,16 +82,11 @@ export class TicTacToeTraits extends SpyneTrait {
 
     const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
 
-    this.sendCurrentState(action);
+    this.ticTacToe$SendGameState(action);
 
   }
 
-  static ticTacToe$OnGameBtnClicked(e){
-    const {type, squareNum, moveNum} = e.payload;
-    const num = type === 'square' ? squareNum : moveNum;
 
-
-  }
 
 
 }

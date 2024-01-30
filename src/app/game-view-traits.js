@@ -1,19 +1,11 @@
 import {ChannelPayloadFilter, SpyneTrait, ViewStream} from 'spyne';
-import {MoveBtn} from "../index";
-
+import {MoveBtn} from './game-view';
 
 export class GameViewTraits extends SpyneTrait {
 
   constructor(context){
     let traitPrefix = "game$";
     super(context, traitPrefix);
-  }
-
-
-  static game$GetMoveNumBtnTemplate(moveNum){
-    const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
-    return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
-
   }
 
   static game$GetGameboardTemplate(){
@@ -39,15 +31,12 @@ export class GameViewTraits extends SpyneTrait {
         <div class="game-info"><ol></ol>
         </div>
         `
-
   }
 
 
   static game$UpdateBoard(e, props=this.props){
-    const {action, payload} = e;
-    const {squares, winner,moveNum, isWinner, nextSquareVal} = payload;
+    const {squares, winner, isWinner, nextSquareVal} = e.payload;
     this.props.el$('.status').el.innerText =  isWinner ? `Winner: ${winner}` : `Next player: ${nextSquareVal}`;
-
 
     const updateSquare = (el)=>{
       const {squareNum} = el.dataset;
@@ -55,10 +44,22 @@ export class GameViewTraits extends SpyneTrait {
       el.classList.toggle('empty', squares[squareNum] === undefined && isWinner === false);
     }
 
-    this.props.el$('.square').arr.forEach(updateSquare);
+    props.el$('.square').arr.forEach(updateSquare);
   }
 
+  static game$GetMoveNumBtnTemplate(moveNum){
+    const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
+    return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
 
+  }
+
+  static game$CreateMoveBtn(e){
+    const {moveNum} = e.payload;
+    const template = this.game$GetMoveNumBtnTemplate(moveNum);
+    this.appendView(new MoveBtn({moveNum, template}), "ol");
+    this.game$UpdateBoard(e);
+
+  }
 
 
 }

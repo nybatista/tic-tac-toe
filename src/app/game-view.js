@@ -10,24 +10,11 @@ export class GameView extends ViewStream {
     super(props);
   }
 
-  /**
-   * TODO: create a pre method for change add move btn
-   *
-   * */
-
   addActionListeners() {
     return [
-      ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateBoard"],
-      ["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "addMoveNumBtn"]
+      ["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "game$CreateMoveBtn"],
+      ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateBoard"]
     ];
-  }
-
-  addMoveNumBtn(e){
-    const {moveNum} = e.payload;
-
-    const template = this.game$GetMoveNumBtnTemplate(moveNum);
-    this.appendView(new MoveBtn({moveNum, template}), "ol");
-    this.game$UpdateBoard(e);
   }
 
   broadcastEvents() {
