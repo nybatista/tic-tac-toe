@@ -1,13 +1,13 @@
 import {Channel, ChannelPayloadFilter} from 'spyne';
-import {TicTacToeTraits} from './tic-tac-toe-traits';
+import {GameViewTraits} from './game-view-traits';
 
 export class TicTacToeChannel extends Channel{
 
   constructor(name, props={}) {
     name="CHANNEL_TIC_TAC_TOE";
     props.sendCachedPayload = true;
-    props.traits = [TicTacToeTraits];
-    props.stateMachine = TicTacToeTraits.game$CreateStateMachine();
+    props.traits = [GameViewTraits];
+    props.stateMachine = GameViewTraits.game$CreateStateMachine();
     super(name, props);
   }
 
@@ -33,10 +33,8 @@ export class TicTacToeChannel extends Channel{
 
   onRegistered(){
 
-    this.getChannel("CHANNEL_UI",
-        new ChannelPayloadFilter(
-        {selector: ['.empty', '.move-btn']}))
-        .subscribe(this.onBtnClicked.bind(this));
+    this.getChannel("CHANNEL_UI", new ChannelPayloadFilter({selector: ['.empty', '.move-btn']}))
+    .subscribe(this.onBtnClicked.bind(this));
 
      this.sendCurrentState();
 

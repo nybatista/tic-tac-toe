@@ -1,18 +1,7 @@
-import {SpyneApp, ViewStream, ChannelPayloadFilter} from 'spyne';
-import {GameViewTraits} from './app/game-view-traits';
-import {TicTacToeChannel} from './app/tic-tac-toe-channel';
-import {GameView} from './app/game-view';
+import {ChannelPayloadFilter, ViewStream} from 'spyne';
+import {GameViewTraits} from './game-view-traits';
 
-const R = require('ramda');
-window.R = R;
-
-const config = {debug:true};
-
-SpyneApp.init(config);
-SpyneApp.registerChannel(new TicTacToeChannel());
-
-
-class GameboardView extends ViewStream {
+export class GameView extends ViewStream {
 
   constructor(props={}) {
     props.traits = [GameViewTraits];
@@ -28,8 +17,17 @@ class GameboardView extends ViewStream {
 
   addActionListeners() {
     return [
-      ["CHANNEL_TIC_TAC_TOE_.*_CHANGE_EVENT", "game$UpdateBoard"]
+      ["CHANNEL_TIC_TAC_TOE_MOVE_CHANGE_EVENT", "game$UpdateBoard"],
+      ["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "addMoveNumBtn"]
     ];
+  }
+
+  addMoveNumBtn(e){
+    const {moveNum} = e.payload;
+
+    const template = this.game$GetMoveNumBtnTemplate(moveNum);
+    this.appendView(new MoveBtn({moveNum, template}), "ol");
+    this.game$UpdateBoard(e);
   }
 
   broadcastEvents() {
@@ -41,7 +39,6 @@ class GameboardView extends ViewStream {
   }
 
 }
-
 
 export class MoveBtn extends ViewStream {
 
@@ -67,10 +64,3 @@ export class MoveBtn extends ViewStream {
   }
 
 }
-
-
-new GameView().appendToDom(document.body);
-
-//new GameboardView().appendToDom(document.body);
-
-

@@ -1,23 +1,23 @@
 const {expect, assert} = require('chai');
-import {TicTacToeTraits} from '../../app/tic-tac-toe-traits';
+import {GameViewTraits} from '../../app/game-view-traits';
 
 describe('should test game traits', () => {
 
   it('game traits should exist', () => {
-   expect(TicTacToeTraits).to.be.a('function');
+   expect(GameViewTraits).to.be.a('function');
   });
 
 
   describe('it should test game state machine',()=>{
 
     it('should create state machine', ()=>{
-       const gameState = TicTacToeTraits.game$CreateStateMachine();
+       const gameState = GameViewTraits.game$CreateStateMachine();
       expect(gameState).to.be.a('object');
 
     })
 
     it('should return correct squares arr by adding squares',()=>{
-      const gameState = TicTacToeTraits.game$CreateStateMachine( ['0', '3', '1', '5'])
+      const gameState = GameViewTraits.game$CreateStateMachine( ['0', '3', '1', '5'])
       gameState.square = 7;
       gameState.square = 4;
      // expect(gameState.squares).to.deep.eq(['X', 'X', undefined, 'O', 'O', 'O', undefined, 'X']);
@@ -40,11 +40,11 @@ describe('should test game traits', () => {
   });
 
   describe('it should test game state', ()=>{
-    const gameState = TicTacToeTraits.game$CreateStateMachine( [0,4,1,5,2])
+    const gameState = GameViewTraits.game$CreateStateMachine( [0,4,1,5,2])
 
 
     describe('it should test game status text',()=>{
-      const game = TicTacToeTraits.game$CreateStateMachine();
+      const game = GameViewTraits.game$CreateStateMachine();
 
         it('it should return default status on zero moves', ()=>{
           const defaultState = game.state;

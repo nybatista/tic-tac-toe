@@ -10,6 +10,12 @@ export class GameViewTraits extends SpyneTrait {
   }
 
 
+  static game$GetMoveNumBtnTemplate(moveNum){
+    const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
+    return `<button class="move-btn" data-type='move' data-num=${moveNum} data-move=${moveNum} data-move-num=${moveNum}>${moveBtnText}</button>`
+
+  }
+
   static game$CreateMoveBtn(moveNum){
     const createMoveBtnTemplate = ()=>{
       const moveBtnText =  moveNum === 0 ? "Go to game start" : `Go to move #${moveNum}`;
@@ -17,7 +23,7 @@ export class GameViewTraits extends SpyneTrait {
     }
 
     const template = createMoveBtnTemplate();
-    this.appendView(new MoveBtn({moveNum, template}), "ol");
+   // this.appendView(new MoveBtn({moveNum, template}), "ol");
 
   }
 
@@ -53,12 +59,6 @@ export class GameViewTraits extends SpyneTrait {
     const {squares, winner,moveNum, isWinner, nextSquareVal} = payload;
     this.props.el$('.status').el.innerText =  isWinner ? `Winner: ${winner}` : `Next player: ${nextSquareVal}`;
 
-    /**
-     * TODO: CREATE MOVE FLAG based on btnType click payload
-     * */
-    if (action === "CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT") {
-      this.game$CreateMoveBtn(moveNum);
-    }
 
     const updateSquare = (el)=>{
       const {squareNum} = el.dataset;
