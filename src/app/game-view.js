@@ -41,7 +41,6 @@ export class MoveBtn extends ViewStream {
     return [["CHANNEL_TIC_TAC_TOE_SQUARE_CHANGE_EVENT", "disposeViewStream", payloadFilter]];
   }
 
-
   broadcastEvents() {
     return [['button' , 'click']];
   }

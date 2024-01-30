@@ -27,11 +27,8 @@ export class TicTacToeTraits extends SpyneTrait {
         const reduceToXO =  (acc, val, i)=>{
           acc[val] = xoFn(i); return acc
         };
-
         return _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
-
       }
-
 
       get state(){
         const {squares} = this;
@@ -61,9 +58,7 @@ export class TicTacToeTraits extends SpyneTrait {
           acc = acc === undefined && /^(X{3}|O{3})$/.test(getXOMatch(item)) ? getXOMatch(item)[0] : acc;
           return acc;
         };
-
         return lines.reduce(reducer, undefined);;
-
       }
     }
 
@@ -79,11 +74,8 @@ export class TicTacToeTraits extends SpyneTrait {
   static ticTacToe$UpdateGameState(e){
     const {type, squareNum, moveNum} = e.payload;
     this.props.stateMachine[`${type}`] = type === 'square' ? squareNum : moveNum;
-
     const action = `CHANNEL_TIC_TAC_TOE_${type.toUpperCase()}_CHANGE_EVENT`;
-
     this.ticTacToe$SendGameState(action);
-
   }
 
 

@@ -11,7 +11,6 @@ export class TicTacToeChannel extends Channel{
     super(name, props);
   }
 
-
   onRegistered(){
     this.getChannel("CHANNEL_UI", new ChannelPayloadFilter({selector: ['.empty', '.move-btn']}))
     .subscribe(this.ticTacToe$UpdateGameState.bind(this));
