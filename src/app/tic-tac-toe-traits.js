@@ -25,7 +25,8 @@ export class TicTacToeTraits extends SpyneTrait {
 
       get squares(){
         const reduceToXO =  (acc, val, i)=>{
-          acc[val] = xoFn(i); return acc
+          acc[val] = xoFn(i);
+          return acc;
         };
         return _movesArr.toSpliced(_lastMove, _movesArr.length).reduce(reduceToXO, []);
       }

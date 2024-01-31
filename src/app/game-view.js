@@ -32,7 +32,6 @@ export class GameView extends ViewStream {
 
 
 
-
 export class MoveBtn extends ViewStream {
 
   constructor(props={}) {
